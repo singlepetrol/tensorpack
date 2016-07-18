@@ -128,18 +128,16 @@ class Model(ModelDesc):
                 .MaxPooling('pool4', 3, 2, padding='VALID')
                 .apply(activate)
 
-                .tf.nn.dropout(0.5 if is_training else 1.0)
                 .FullyConnected('fc0', 4096)
                 .apply(fg)
                 .BatchNorm('bnfc0')
                 .apply(activate)
 
-                .tf.nn.dropout(0.5 if is_training else 1.0)
                 .FullyConnected('fc1', 4096)
                 .apply(fg)
                 .BatchNorm('bnfc1')
                 .apply(nonlin)
-                .FullyConnected('fct', 1000)())
+                .FullyConnected('fct', 1000, use_bias=True)())
         tf.get_variable = old_get_variable
 
 
